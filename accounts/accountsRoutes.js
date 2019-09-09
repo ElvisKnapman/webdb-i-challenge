@@ -7,6 +7,19 @@ const {
   accountIDValidation
 } = require("../middleware/validation.js");
 
+router.get("/", async (req, res) => {
+  // retrieve account stored on req object by accountIDValidation middleware
+  try {
+    const accounts = await db("accounts");
+    res.status(200).json(accounts);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Server could not retrieve accounts." });
+  }
+  console.log("account in GET:ID", account);
+  res.status(200).json(account);
+});
+
 router.get("/:id", accountIDValidation, (req, res) => {
   // retrieve account stored on req object by accountIDValidation middleware
   const { account } = req;
