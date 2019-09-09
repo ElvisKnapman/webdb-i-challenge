@@ -1,3 +1,5 @@
+const db = require("../data/dbConfig.js");
+
 const accountInfoValidation = (req, res, next) => {
   const { body } = req;
 
@@ -12,6 +14,28 @@ const accountInfoValidation = (req, res, next) => {
   }
 };
 
+const accountIDValidation = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    // using .first() will pull that object out of the array for us
+    const account = await db("accounts")
+      .where({ id })
+      .first();
+    console.log("account::::", account);
+    if (account) {
+      req.account = account;
+      next();
+    } else {
+      res.status(404).json({ message: "Account ID is invalid." });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Server could not retrieve the acccount" });
+  }
+};
+
 module.exports = {
-  accountInfoValidation
+  accountInfoValidation,
+  accountIDValidation
 };
