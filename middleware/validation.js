@@ -1,4 +1,4 @@
-const newAccountValidation = (req, res, next) => {
+const accountInfoValidation = (req, res, next) => {
   const { body } = req;
 
   if (!body.name || !body.budget) {
@@ -13,5 +13,5 @@ const newAccountValidation = (req, res, next) => {
 };
 
 module.exports = {
-  newAccountValidation
+  accountInfoValidation
 };
